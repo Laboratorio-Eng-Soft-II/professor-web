@@ -23,12 +23,12 @@ export interface CompanyModel {
 export const CompaniesPage: React.FC = () => {
   const navigate = useNavigate();
 
-  const [companies, setPositions] = useState<CompanyModel[]>();
+  const [companies, setCompanies] = useState<CompanyModel[]>();
 
   useEffect(() => {
     axios
       .get(`${COMPANIES_BASE_URL}companies`)
-      .then((response) => setPositions(response.data));
+      .then((response) => setCompanies(response.data));
   }, []);
 
   return (
