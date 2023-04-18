@@ -1,4 +1,5 @@
 export const AppPath = {
-  login: "/login",
-  home: "/home",
+  login: "/professor/login",
+  home: "/professor/home",
+  signUp: "professor/sign-up",
 };
