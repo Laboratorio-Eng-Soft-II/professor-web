@@ -1,6 +1,10 @@
 import React from "react";
 import { Space, Button, Input, Form, Typography, Card } from "antd";
 import { CenterView } from "../../../components/center-view/center-view.styles";
+import axios from "axios";
+import { AUTH_BASE_URL } from "../../../core/base-urls";
+import { useNavigate } from "react-router-dom";
+import { AppPath } from "../../routes";
 
 const { Title, Text } = Typography;
 
@@ -11,9 +15,21 @@ interface IForm {
 
 export const LoginPage = () => {
   const [form] = Form.useForm<IForm>();
+  const navigate = useNavigate();
 
-  const onFinish = (values: IForm) => {
-    console.log(values);
+  const onFinish = async (values: IForm) => {
+    const { email, password } = values;
+
+    try {
+      const result = await axios.post(`${AUTH_BASE_URL}get-token`, {
+        email,
+        password,
+      });
+      localStorage.setItem("user", JSON.stringify(result.data));
+      navigate(AppPath.home);
+    } catch (error) {
+      console.log(error);
+    }
   };
 
   return (
