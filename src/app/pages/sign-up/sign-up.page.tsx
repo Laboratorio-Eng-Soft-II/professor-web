@@ -13,6 +13,7 @@ interface IForm {
   name: string;
   email: string;
   nusp: string;
+  phone: string;
   department: string;
 }
 
@@ -24,12 +25,13 @@ export const SignUpPage = () => {
   const navigate = useNavigate();
 
   const onFinish = async (values: IForm) => {
-    const { email, name, nusp, department } = values;
+    const { email, name, nusp, phone, department } = values;
 
-    await axios.post(`${PROFESSORS_BASE_URL}professor`, {
+    await axios.post(`${PROFESSORS_BASE_URL}professors`, {
       nusp,
       name,
-      usp_email: email,
+      email,
+      phone,
       department,
     });
 
@@ -88,6 +90,16 @@ export const SignUpPage = () => {
               ]}
             >
               <Input placeholder="Seu número USP" />
+            </Form.Item>
+
+            <Form.Item
+              label="Telefone"
+              name="phone"
+              rules={[
+                { required: true, message: "Por favor, digite seu telefone" },
+              ]}
+            >
+              <Input placeholder="Seu telefone" />
             </Form.Item>
 
             <Form.Item name="department" label="Departamento">
