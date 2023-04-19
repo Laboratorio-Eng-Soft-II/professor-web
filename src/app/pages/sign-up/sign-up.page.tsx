@@ -47,8 +47,8 @@ export const SignUpPage = () => {
           message="Coordenador cadastrado com sucesso"
           showIcon
           action={
-            <Button type="link" onClick={() => navigate(AppPath.home)}>
-              IR PARA HOME
+            <Button type="link" onClick={() => navigate(AppPath.login)}>
+              IR PARA LOGIN
             </Button>
           }
           afterClose={() => setShowFlash(false)}
