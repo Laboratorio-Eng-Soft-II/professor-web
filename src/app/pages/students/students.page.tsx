@@ -31,6 +31,8 @@ export const StudentsPage: React.FC = () => {
       .then((response) => setStudents(response.data));
   }, []);
 
+  console.log(students);
+
   return (
     <Container>
       <Header title="Alunos" />
@@ -39,7 +41,7 @@ export const StudentsPage: React.FC = () => {
         <Fragment key={`${student}-${index}`}>
           <TextCard
             title={student.name + " - " + student.engineering}
-            // onClick={() => navigate(`/students/positions/${company.id}`)}
+            onClick={() => navigate(`${AppPath.students}/${student.nusp}`)}
           />
           <Separator size={Spacing.Small} />
         </Fragment>

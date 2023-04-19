@@ -62,7 +62,9 @@ export const LoginPage = () => {
                 <Button htmlType="submit" type="primary">
                   Login
                 </Button>
-                <Button type="text">Fazer cadastro</Button>
+                <Button type="text" onClick={() => navigate(AppPath.signUp)}>
+                  Fazer cadastro
+                </Button>
               </Space>
             </Form.Item>
           </Form>
