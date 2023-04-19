@@ -15,6 +15,7 @@ interface IForm {
   nusp: string;
   phone: string;
   department: string;
+  password: string;
 }
 
 export const SignUpPage = () => {
@@ -25,7 +26,7 @@ export const SignUpPage = () => {
   const navigate = useNavigate();
 
   const onFinish = async (values: IForm) => {
-    const { email, name, nusp, phone, department } = values;
+    const { email, name, nusp, phone, department, password } = values;
 
     await axios.post(`${PROFESSORS_BASE_URL}professors`, {
       nusp,
@@ -33,6 +34,7 @@ export const SignUpPage = () => {
       email,
       phone,
       department,
+      password
     });
 
     setShowFlash(true);
