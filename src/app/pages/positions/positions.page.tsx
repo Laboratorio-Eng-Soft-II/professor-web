@@ -38,7 +38,7 @@ export const PositionsPage: React.FC = () => {
         <Fragment key={`${position}-${index}`}>
           <TextCard
             title={position.type + " - " + position.description}
-            onClick={() => navigate(`/students/positions/${position.id}`)}
+            onClick={() => navigate(`${AppPath.positions}/${position.id}`)}
           />
           <Separator size={Spacing.Small} />
         </Fragment>

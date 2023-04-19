@@ -26,7 +26,7 @@ export const SignUpPage = () => {
   const onFinish = async (values: IForm) => {
     const { email, name, nusp, department } = values;
 
-    await axios.post(`${PROFESSORS_BASE_URL}students`, {
+    await axios.post(`${PROFESSORS_BASE_URL}professor`, {
       nusp,
       name,
       usp_email: email,
