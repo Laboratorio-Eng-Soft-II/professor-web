@@ -3,7 +3,7 @@ import { PositionModel } from "../positions";
 import { useNavigate } from "react-router";
 import axios from "axios";
 import { useEffect, useState } from "react";
-import { POSITIONS_BASE_URL } from "../../../core";
+import { POSITIONS_BASE_URL, PROFESSORS_BASE_URL } from "../../../core";
 import { CenterView } from "../../../components/center-view/center-view.styles";
 import {
   Card,
@@ -16,7 +16,6 @@ import {
   Spin,
 } from "antd";
 import { Colors } from "../../../theme";
-import { AppPath } from "../../routes";
 
 interface RouteParams {
   cnpj: string | undefined;
@@ -33,16 +32,11 @@ export const PositionDetailsPage: React.FC = () => {
 
   const navigate = useNavigate();
 
-  const handleApprovePosition = () => {
-    axios
-      .post("URL", { dados: "COLOCAR OS DADOS NECESSÁRIOS PARA APROVAR VAGA" })
-      .then(() => navigate(AppPath.positions));
-  };
-
-  const handleRefusePosition = () => {
-    axios
-      .post("URL", { dados: "COLOCAR OS DADOS NECESSÁRIOS PARA RECUSAR VAGA" })
-      .then(() => navigate(AppPath.positions));
+  const handlePositionStatus = (status: string) => {
+    axios.post(`${PROFESSORS_BASE_URL}professors/positions/${id}`, 
+      { approved: status }
+    )
+    .then(() => navigate(-1));
   };
 
   useEffect(() => {
@@ -114,10 +108,10 @@ export const PositionDetailsPage: React.FC = () => {
           <Spin />
         )}
         <Space>
-          <Button type="primary" onClick={handleApprovePosition}>
+          <Button type="primary" onClick={() => handlePositionStatus('approved')}>
             Aprovar vaga
           </Button>
-          <Button type="primary" danger onClick={handleRefusePosition}>
+          <Button type="primary" danger onClick={() => handlePositionStatus('rejected')}>
             Recusar vaga
           </Button>
           <Button onClick={() => navigate(-1)}>Voltar</Button>

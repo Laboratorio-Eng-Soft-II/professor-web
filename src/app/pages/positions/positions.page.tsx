@@ -3,10 +3,12 @@ import React, { Fragment, useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import { POSITIONS_BASE_URL } from "../../../core";
-import { Container } from "../home/home-styles";
+import { CardsContainer, Container } from "../home/home-styles";
 import { LinkButton, Spacing } from "../../../theme";
 import { AppPath } from "../../routes";
-import { Hbox, Header, Separator, TextCard } from "../../../components";
+import { Hbox, Separator, TextCard } from "../../../components";
+import { CardItem } from "../../../components/card-item";
+import { faCheck, faListAlt, faXmarkCircle } from "@fortawesome/free-solid-svg-icons";
 
 export interface PositionModel {
   type: string;
@@ -17,6 +19,7 @@ export interface PositionModel {
   id: string;
   cnpj: string;
   benefits: string;
+  approved: string;
 }
 
 export const PositionsPage: React.FC = () => {
@@ -25,14 +28,38 @@ export const PositionsPage: React.FC = () => {
   const [positions, setPositions] = useState<PositionModel[]>();
 
   useEffect(() => {
-    axios
-      .get(`${POSITIONS_BASE_URL}positions`)
+    axios.get(`${POSITIONS_BASE_URL}positions`)
       .then((response) => setPositions(response.data));
   }, []);
 
+  const FilterPositionsByStatus = (status: string) => {
+    axios.get(`${POSITIONS_BASE_URL}positions`)
+      .then((response) => {
+        setPositions(response.data.filter((position: PositionModel) => position.approved === status))
+      });
+  }
+
   return (
     <Container>
-      <Header title="Todas as vagas" />
+      <CardsContainer>
+        <CardItem
+          icon={faXmarkCircle}
+          title="Recusadas"
+          onClick={() => FilterPositionsByStatus('rejected')}
+        />
+        <CardItem
+          icon={faListAlt}
+          title="Pendentes"
+          onClick={() => FilterPositionsByStatus('pending')}
+        />
+        <CardItem
+          icon={faCheck}
+          title="Aprovadas"
+          onClick={() => FilterPositionsByStatus('approved')}
+        />
+      </CardsContainer>
+
+      <Separator />
 
       {positions?.map((position, index) => (
         <Fragment key={`${position}-${index}`}>

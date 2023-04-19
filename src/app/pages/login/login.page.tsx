@@ -1,10 +1,11 @@
-import React from "react";
+import React, { useState } from "react";
 import { Space, Button, Input, Form, Typography, Card } from "antd";
 import { CenterView } from "../../../components/center-view/center-view.styles";
 import axios from "axios";
 import { AUTH_BASE_URL } from "../../../core/base-urls";
 import { useNavigate } from "react-router-dom";
 import { AppPath } from "../../routes";
+import { FlashMessage } from "../../../components/flash-message";
 
 const { Title, Text } = Typography;
 
@@ -14,6 +15,8 @@ interface IForm {
 }
 
 export const LoginPage = () => {
+  const [showAlert, setShowAlert] = useState(false)
+
   const [form] = Form.useForm<IForm>();
   const navigate = useNavigate();
 
@@ -28,12 +31,31 @@ export const LoginPage = () => {
       localStorage.setItem("user", JSON.stringify(result.data));
       navigate(AppPath.home);
     } catch (error) {
+      setShowAlert(true);
       console.log(error);
     }
   };
 
   return (
     <CenterView>
+      {showAlert && (
+        <FlashMessage
+            banner
+            showIcon
+            type="error"
+            afterClose={() => setShowAlert(false)}
+            message="Ocorreu um erro durante o login!"
+            action={
+                <Button
+                    type="link"
+                    size="small"
+                    onClick={() => setShowAlert(false)}
+                >
+                    TENTAR NOVAMENTE
+                </Button>
+            }
+        />
+      )}
       <Card bordered={false}>
         <Space direction="vertical">
           <Title level={2}>Login</Title>
